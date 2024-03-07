@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F4E0527C-98CC-4C37-AA3D-667CFE00DE45}</ProjectGuid>
+    <ProjectGuid>{533763E2-0B69-4D80-AA49-86E46C5C72C4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>LutronOrderingSystem</RootNamespace>
     <AssemblyName>LutronOrderingSystem</AssemblyName>
@@ -55,6 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="ViewModels\ControlStationsViewModel.cs" />
+    <Compile Include="ViewModels\EnclosuresViewModel.cs" />
+    <Compile Include="Views\ControlStationsView.xaml.cs">
+      <DependentUpon>ControlStationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EnclosuresView.xaml.cs">
+      <DependentUpon>EnclosuresView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +77,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ControlStationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EnclosuresView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -94,5 +112,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

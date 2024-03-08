@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LutronOrderingSystem.ViewModels
 {
-    class ControlStationsViewModel
+    public class ControlStationsViewModel
     {
     }
 }

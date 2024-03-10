@@ -27,15 +27,15 @@ namespace LutronOrderingSystem.Models
         public MountTypeEnum MountType { get; set; } // Only applicable for Enclosure
         public int Quantity { get; set; }
 
-        public ProductModel(int modelId, string modelDisplayString, string description, ProductCategory category, int numberOfButtons, MountTypeEnum mountType, int quantity)
-        {
-            ModelId = modelId;
-            ModelDisplayString = modelDisplayString;
-            Description = description;
-            Category = category;
-            NumberOfButtons = numberOfButtons;
-            MountType = mountType;
-            Quantity = quantity;
-        }
+        //public ProductModel(int modelId, string modelDisplayString, string description, ProductCategory category, int numberOfButtons, MountTypeEnum mountType, int quantity)
+        //{
+        //    ModelId = modelId;
+        //    ModelDisplayString = modelDisplayString;
+        //    Description = description;
+        //    Category = category;
+        //    NumberOfButtons = numberOfButtons;
+        //    MountType = mountType;
+        //    Quantity = quantity;
+        //}
     }
 }

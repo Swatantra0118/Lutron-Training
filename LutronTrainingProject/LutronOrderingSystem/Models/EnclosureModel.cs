@@ -13,7 +13,7 @@ namespace LutronOrderingSystem.Models
         public string Description { get; set; }
         public string MountType { get; set; }
         public int Quantity { get; set; }
-
+   
         public EnclosureModel(int modelId, string modelDisplayString, string description, string mountType, int quantity)
         {
             ModelId = modelId;

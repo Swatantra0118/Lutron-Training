@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\tannuverma\Desktop\LutronTrainingProject\LutronOrderingSystem\obj\Debug\
+C:\Users\tannuverma\Desktop\Lutron2\Lutron-Training\LutronTrainingProject\LutronOrderingSystem\obj\Debug\
 LutronOrderingSystem
 none
 false
 DEBUG;TRACE
-C:\Users\tannuverma\Desktop\LutronTrainingProject\LutronOrderingSystem\App.xaml
-3-64243724
+C:\Users\tannuverma\Desktop\Lutron2\Lutron-Training\LutronTrainingProject\LutronOrderingSystem\App.xaml
+51482815021
 
-12-269954539
-13-1310406943
-MainWindow.xaml;Views\ControlStationsView.xaml;Views\EnclosuresView.xaml;
+211400472813
+20896375524
+Views\AddProductView.xaml;Views\ControlStationsView.xaml;Views\EditProductView.xaml;Views\EnclosuresView.xaml;Views\ProductsView.xaml;
 
-False
+True
 

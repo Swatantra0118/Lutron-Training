@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace LutronOrderingSystem.Views
 {
     /// <summary>
-    /// Interaction logic for EnclosuresView.xaml
+    /// Interaction logic for Enclosures.xaml
     /// </summary>
-    public partial class EnclosuresView : Window
+    public partial class Enclosures : Window
     {
-        public EnclosuresView()
+        public Enclosures()
         {
             InitializeComponent();
         }

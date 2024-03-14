@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using LutronOrderingSystem.DataAccess;
 using LutronOrderingSystem.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,14 @@ namespace LutronOrderingSystem
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            InitializeDatabase();
             DisplayRootViewForAsync<ProductsViewModel>();
+        }
+        private void InitializeDatabase()
+        {
+            DatabaseInitializer initializer = new DatabaseInitializer();
+            initializer.CreateDatabaseAndTables();
+            //initializer.SeedInitialValues();
         }
     }
 }

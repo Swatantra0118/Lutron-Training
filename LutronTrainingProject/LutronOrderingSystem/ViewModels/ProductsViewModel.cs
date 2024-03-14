@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static LutronOrderingSystem.Models.ProductModel;
 
 namespace LutronOrderingSystem.ViewModels
 {
@@ -195,21 +196,66 @@ namespace LutronOrderingSystem.ViewModels
 
         private async void EditProduct(object obj)
         {
-            if (obj is productViewModel productViewModel)
+            //if (obj is productViewModel productViewModel)
+            //{
+            //    EditProductViewModel editProductViewModel = new EditProductViewModel(productViewModel.Product);
+            //    WindowManager windowManager = new WindowManager();
+            //    bool? result = await windowManager.ShowDialogAsync(editProductViewModel);
+
+            //    if (result.HasValue && result.Value)
+            //    {
+            //        databaseManager.UpdateProduct(editProductViewModel.Product);
+
+            //        LoadControlStations();
+            //        LoadEnclosures();
+
+            //        NotifyOfPropertyChange(nameof(ControlStations));
+            //        NotifyOfPropertyChange(nameof(Enclosures));
+            //    }
+            //}
+
+            if (obj != null)
             {
-                EditProductViewModel editProductViewModel = new EditProductViewModel(productViewModel.Product);
-                WindowManager windowManager = new WindowManager();
-                bool? result = await windowManager.ShowDialogAsync(editProductViewModel);
+                productViewModel productViewModel = null;
 
-                if (result.HasValue && result.Value)
+                // Check if obj is a ControlStationModel or EnclosureModel
+                if (obj is ControlStationModel controlStation)
                 {
-                    databaseManager.UpdateProduct(editProductViewModel.Product);
+                    // Convert ControlStationModel to productViewModel
+                    productViewModel = new productViewModel(new ProductModel
+                    {
+                        ModelId = controlStation.ModelId,
+                        ModelDisplayString = controlStation.ModelDisplayString,
+                        Description = controlStation.Description,
+                        NumberOfButtons = controlStation.NumberOfButtons,
+                        Quantity = controlStation.Quantity
+                        // Add other properties as needed
+                    });
+                }
+                else if (obj is EnclosureModel enclosure)
+                {
+                    // Convert EnclosureModel to productViewModel
+                    productViewModel = new productViewModel(new ProductModel
+                    {
+                        ModelId = enclosure.ModelId,
+                        ModelDisplayString = enclosure.ModelDisplayString,
+                        Description = enclosure.Description,
+                        Quantity = enclosure.Quantity,
+                        MountType = (MountTypeEnum)Enum.Parse(typeof(MountTypeEnum), enclosure.MountType)
+                        // Add other properties as needed
+                    });
+                }
 
-                    LoadControlStations();
-                    LoadEnclosures();
+                if (productViewModel != null)
+                {
+                    EditProductViewModel editProductViewModel = new EditProductViewModel(productViewModel.Product);
+                    WindowManager windowManager = new WindowManager();
+                    bool? result = await windowManager.ShowDialogAsync(editProductViewModel);
 
-                    NotifyOfPropertyChange(nameof(ControlStations));
-                    NotifyOfPropertyChange(nameof(Enclosures));
+                    if (result.HasValue && result.Value)
+                    {
+                        databaseManager.UpdateProduct(editProductViewModel.Product);
+                    }
                 }
             }
         }

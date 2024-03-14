@@ -10,8 +10,8 @@ namespace LutronOrderingSystem.ViewModels
 {
     public class CartWindowViewModel : Screen
     {
-        private List<CartItemViewModel> _cartItems;
-        public List<CartItemViewModel> CartItems
+        private BindableCollection<CartItemViewModel> _cartItems;
+        public BindableCollection<CartItemViewModel> CartItems
         {
             get { return _cartItems; }
             set
@@ -22,7 +22,7 @@ namespace LutronOrderingSystem.ViewModels
         }
         private readonly DatabaseManager databasemanager;
         public ICommand CheckoutCommand { get; private set; }
-        public CartWindowViewModel(List<CartItemViewModel> cartItems)
+        public CartWindowViewModel(BindableCollection<CartItemViewModel> cartItems)
         {
             CartItems = cartItems;
             CheckoutCommand = new RelayCommand(Checkout);
@@ -39,6 +39,7 @@ namespace LutronOrderingSystem.ViewModels
                     databasemanager.UpdateProduct(p);
                 }
                 CartItems.Clear();
+
             
         }
         //private void checkout(object obj)

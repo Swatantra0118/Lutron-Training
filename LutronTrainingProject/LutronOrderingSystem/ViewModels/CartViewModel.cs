@@ -17,14 +17,12 @@ namespace LutronOrderingSystem.ViewModels
                 NotifyOfPropertyChange(() => CartItems);
             }
         }
-        private readonly DatabaseManager databasemanager;
         private readonly IWindowManager _windowManager;
 
         public CartViewModel(IWindowManager windowManager)
         {
             CartItems = new BindableCollection<CartItemViewModel>();
             _windowManager = windowManager;
-            databasemanager = new DatabaseManager();
         }
         public void AddToCart(ProductModel product)
         {
@@ -47,7 +45,12 @@ namespace LutronOrderingSystem.ViewModels
         
         public void ShowCart()
         {
-            _windowManager.ShowDialogAsync(new CartWindowViewModel(CartItems.ToList()));
+            _windowManager.ShowDialogAsync(new CartWindowViewModel(CartItems));
+        }
+
+        public void clear()
+        {
+            CartItems.Clear();
         }
     }
 

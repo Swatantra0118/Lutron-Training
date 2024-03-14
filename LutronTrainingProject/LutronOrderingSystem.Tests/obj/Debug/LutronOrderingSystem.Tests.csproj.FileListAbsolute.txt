@@ -30,3 +30,15 @@ C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Trai
 C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\obj\Debug\LutronOrderingSystem.Tests.csproj.CopyComplete
 C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\obj\Debug\LutronOrderingSystem.Tests.dll
 C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\obj\Debug\LutronOrderingSystem.Tests.pdb
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Platform.dll
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Core.dll
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Platform.Core.dll
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Platform.pdb
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Platform.xml
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Core.pdb
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Core.xml
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Platform.Core.pdb
+C:\Users\swatantratiwari\OneDrive - Nagarro\Desktop\LutronAssignment\Lutron-Training\LutronTrainingProject\LutronOrderingSystem.Tests\bin\Debug\Caliburn.Micro.Platform.Core.xml

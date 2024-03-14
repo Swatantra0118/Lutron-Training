@@ -76,6 +76,9 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DataAccess\DatabaseInitializer.cs" />
     <Compile Include="DataAccess\DatabaseManager.cs" />
+    <Compile Include="Helpers\CategoryConverter.cs" />
+    <Compile Include="Helpers\CategoryToVisibilityConverter.cs" />
+    <Compile Include="Helpers\Int32ToBooleanConverter.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="ViewModels\AddProductViewModel.cs" />
     <Compile Include="ViewModels\EditProductViewModel.cs" />

@@ -25,10 +25,9 @@ namespace LutronOrderingSystem.ViewModels
         {
             Product = new ProductModel();
         }
-
-        public void AddTask()
+        public async void AddProductAsync()
         {
-            TryCloseAsync(true);
+            await TryCloseAsync(true);
         }
     }
 }

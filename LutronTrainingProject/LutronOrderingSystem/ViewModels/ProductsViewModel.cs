@@ -26,13 +26,29 @@ namespace LutronOrderingSystem.ViewModels
             }
         }
 
+        private CartViewModel _cartViewModel;
+        public CartViewModel CartViewModel
+        {
+            get { return _cartViewModel; }
+            set
+            {
+                _cartViewModel = value;
+                NotifyOfPropertyChange(() => CartViewModel);
+            }
+        }
+
         private readonly DatabaseManager databaseManager;
         public ObservableCollection<EnclosureModel> Enclosures { get; set; }
         public ObservableCollection<ControlStationModel> ControlStations { get; set; }
 
+
         public ICommand AddCommand { get;  set; }
         public ICommand EditCommand { get;  set; }
         public ICommand DeleteCommand { get;  set; }
+        public ICommand ShowControlStationsCommand { get; private set; }
+        public ICommand ShowEnclosuresCommand { get; private set; }
+        public ICommand AddToCartCommand { get; private set; }
+        public ICommand ShowCartCommand { get; private set; }
 
 
         public ProductsViewModel()
@@ -41,6 +57,7 @@ namespace LutronOrderingSystem.ViewModels
             Enclosures = new ObservableCollection<EnclosureModel>();
             LoadEnclosures();
             ControlStations = new ObservableCollection<ControlStationModel>();
+            CartViewModel = new CartViewModel(new WindowManager());
             LoadControlStations();
             InitializeCommands();
         }
@@ -49,8 +66,75 @@ namespace LutronOrderingSystem.ViewModels
             AddCommand = new RelayCommand(AddProductAsync,CanShowWindow);
             EditCommand = new RelayCommand(EditProduct, CanShowWindow);
             DeleteCommand = new RelayCommand(DeleteProduct);
+
+            ShowControlStationsCommand = new RelayCommand(ShowControlStations);
+            ShowEnclosuresCommand = new RelayCommand(ShowEnclosures);
+            AddToCartCommand = new RelayCommand(AddToCart);
+            ShowCartCommand = new RelayCommand(ShowCart);
+
         }
 
+
+        private void AddToCart(object obj)
+        {
+            if (obj is int modelId)
+            {
+
+                ProductModel productModel = databaseManager.GetProductById(modelId);
+            
+                CartViewModel.AddToCart(productModel); // Call AddToCart method of CartViewModel
+                LoadControlStations();
+                LoadEnclosures();
+
+            }
+        }
+
+        private void ShowCart(object obj)
+        {
+            CartViewModel.ShowCart(); // Call ShowCart method of CartViewModel
+            LoadControlStations();
+            LoadEnclosures();
+
+        }
+
+        private void ShowControlStations(object obj)
+        {
+            IsControlStationsVisible = true;
+            IsEnclosuresVisible = false;
+        }
+
+        private void ShowEnclosures(object obj)
+        {
+            IsControlStationsVisible = false;
+            IsEnclosuresVisible = true;
+        }
+
+        private bool _isControlStationsVisible = true;
+        public bool IsControlStationsVisible
+        {
+            get { return _isControlStationsVisible; }
+            set
+            {
+                _isControlStationsVisible = value;
+                NotifyOfPropertyChange(nameof(IsControlStationsVisible));
+            }
+        }
+
+        private bool _isEnclosuresVisible;
+        public bool IsEnclosuresVisible
+        {
+            get { return _isEnclosuresVisible; }
+            set
+            {
+                _isEnclosuresVisible = value;
+                NotifyOfPropertyChange(nameof(IsEnclosuresVisible));
+            }
+        }
+
+        private bool CanShowWindow(object obj)
+        {
+            return true;
+        }
         private void LoadControlStations()
         {
             DataTable dataTable = databaseManager.GetProducts();
@@ -79,7 +163,7 @@ namespace LutronOrderingSystem.ViewModels
             Enclosures.Clear();
             foreach (DataRow row in dataTable.Rows)
             {
-                if (!Convert.IsDBNull(row["MountType"]))
+                if (row["Category"].ToString()=="Enclosure")
                 {
                     EnclosureModel enclosure = new EnclosureModel(
                       Convert.ToInt32(row["ModelId"]),
@@ -96,10 +180,17 @@ namespace LutronOrderingSystem.ViewModels
 
         private void DeleteProduct(object obj)
         {
-            if (obj is productViewModel productToDelete)
+
+            if (obj is int modelId)
             {
-                databaseManager.DeleteProduct(productToDelete.Product.ModelId);
+                
+                databaseManager.DeleteProduct(modelId);
+                
+                LoadControlStations();
+                LoadEnclosures();
+
             }
+
         }
 
         private async void EditProduct(object obj)
@@ -113,13 +204,14 @@ namespace LutronOrderingSystem.ViewModels
                 if (result.HasValue && result.Value)
                 {
                     databaseManager.UpdateProduct(editProductViewModel.Product);
+
+                    LoadControlStations();
+                    LoadEnclosures();
+
+                    NotifyOfPropertyChange(nameof(ControlStations));
+                    NotifyOfPropertyChange(nameof(Enclosures));
                 }
             }
-        }
-
-        private bool CanShowWindow(object obj)
-        {
-            return true;
         }
         private async void AddProductAsync(object obj)
         {
@@ -129,15 +221,24 @@ namespace LutronOrderingSystem.ViewModels
 
             if (result.HasValue && result.Value)
             {
-                //addProductViewModel.Product.ModelId = 999;
-                var newViewModel = new productViewModel
-                {
-                    Product = addProductViewModel.Product
-                };
-                databaseManager.AddProduct(newViewModel.Product);
+                var newProduct = addProductViewModel.Product;
+
+                databaseManager.AddProduct(newProduct);
+
+                LoadControlStations();
+                LoadEnclosures();
+
+                NotifyOfPropertyChange(nameof(ControlStations));
+                NotifyOfPropertyChange(nameof(Enclosures));
             }
 
         }
+
+        public Array ProductCategoryValues => Enum.GetValues(typeof(ProductModel.ProductCategory));
+
+        public Array MountTypeValues => Enum.GetValues(typeof(ProductModel.MountTypeEnum));
+
+
 
 
     }

@@ -23,12 +23,12 @@ namespace LutronOrderingSystem.ViewModels
 
         public void SaveChanges()
         {
-            TryCloseAsync(true); // Close the dialog and return true to indicate successful editing
+            TryCloseAsync(true); 
         }
 
         public void Cancel()
         {
-            TryCloseAsync(false); // Close the dialog and return false to indicate cancelation
+            TryCloseAsync(false); 
         }
     }
 }

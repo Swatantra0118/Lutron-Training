@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helper="clr-namespace:LutronOrderingSystem.Helpers"
         xmlns:local="clr-namespace:LutronOrderingSystem.Views"
         xmlns:viewmodels="clr-namespace:LutronOrderingSystem.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:ProductsViewModel}"
@@ -10,6 +11,7 @@
         Title="Lutron Ordering System" Height="450" Width="800">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <helper:Int32ToBooleanConverter x:Key="Int32ToBooleanConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -32,7 +34,17 @@
 
             <!-- Control Stations Grid -->
             <DataGrid Grid.Row="0" IsReadOnly="True" Margin="0,40,0,0" Visibility="{Binding IsControlStationsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-          ItemsSource="{Binding ControlStations}" AutoGenerateColumns="False">
+                      ItemsSource="{Binding ControlStations}" AutoGenerateColumns="False">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <!--<DataTrigger Binding="{Binding Quantity}" Value="7">-->
+                            <DataTrigger Binding="{Binding Quantity, Converter={StaticResource Int32ToBooleanConverter}}" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Model ID" Binding="{Binding ModelId}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Model Display String" Binding="{Binding ModelDisplayString}" />
@@ -45,7 +57,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="Edit" Margin="5"/>
+                                    <Button Content="Edit" Margin="5" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" />
                                     <Button Content="Delete" Margin="5" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding ModelId}"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -56,7 +68,7 @@
                     <DataGridTemplateColumn Header="Add to Cart">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Add to Cart" Margin="5"/>
+                                <Button Content="Add to Cart" Margin="5" Command="{Binding DataContext.AddToCartCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding ModelId}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -64,8 +76,17 @@
             </DataGrid>
 
             <!-- Enclosures Grid -->
-            <DataGrid Grid.Row="0" Margin="0,40,0,0" Visibility="{Binding IsEnclosuresVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-          ItemsSource="{Binding Enclosures}" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="0" IsReadOnly="True" Margin="0,40,0,0" Visibility="{Binding IsEnclosuresVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      ItemsSource="{Binding Enclosures}" AutoGenerateColumns="False">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Quantity, Converter={StaticResource Int32ToBooleanConverter}}" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Model ID" Binding="{Binding ModelId}" />
                     <DataGridTextColumn Header="Model Display String" Binding="{Binding ModelDisplayString}" />
@@ -78,7 +99,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="Edit" Margin="5"/>
+                                    <Button Content="Edit" Margin="5" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" />
                                     <Button Content="Delete" Margin="5" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding ModelId}"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -89,7 +110,8 @@
                     <DataGridTemplateColumn Header="Add to Cart">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Add to Cart" Margin="5"/>
+                                <Button Content="Add to Cart" Margin="5" Command="{Binding DataContext.AddToCartCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding ModelId}" />
+
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -97,7 +119,9 @@
             </DataGrid>
             <Button Content="Add Device" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding AddCommand}" Margin="10,10,10,10" />
             <!-- Refresh Button -->
-            <Button Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>
+            <!--<Button Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10"/>-->
+            <Button Content="Show Cart" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10" Command="{Binding DataContext.ShowCartCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+
 
         </Grid>
     </Grid>

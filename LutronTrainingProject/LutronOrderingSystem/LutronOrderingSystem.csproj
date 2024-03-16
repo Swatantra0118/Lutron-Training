@@ -76,13 +76,25 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DataAccess\DatabaseInitializer.cs" />
     <Compile Include="DataAccess\DatabaseManager.cs" />
+    <Compile Include="Helpers\CategoryConverter.cs" />
+    <Compile Include="Helpers\CategoryToVisibilityConverter.cs" />
+    <Compile Include="Helpers\Int32ToBooleanConverter.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="ViewModels\AddProductViewModel.cs" />
+    <Compile Include="ViewModels\CartItemViewModel.cs" />
+    <Compile Include="ViewModels\CartViewModel.cs" />
+    <Compile Include="ViewModels\CartWindowViewModel.cs" />
     <Compile Include="ViewModels\EditProductViewModel.cs" />
     <Compile Include="ViewModels\productViewModel.cs" />
     <Compile Include="ViewModels\ProductsViewModel.cs" />
     <Compile Include="Views\AddProductView.xaml.cs">
       <DependentUpon>AddProductView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CartWindowView.xaml.cs">
+      <DependentUpon>CartWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CheckoutConfirmationView.xaml.cs">
+      <DependentUpon>CheckoutConfirmationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ControlStationsView.xaml.cs">
       <DependentUpon>ControlStationsView.xaml</DependentUpon>
@@ -102,6 +114,14 @@
       <DependentUpon>ProductsView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddProductView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CartWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CheckoutConfirmationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

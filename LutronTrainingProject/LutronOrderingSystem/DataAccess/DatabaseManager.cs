@@ -88,8 +88,27 @@ namespace LutronOrderingSystem.DataAccess
                         command.Parameters.AddWithValue("@ModelDisplayString", product.ModelDisplayString);
                         command.Parameters.AddWithValue("@Description", product.Description);
                         command.Parameters.AddWithValue("@Category", product.Category.ToString());
-                        command.Parameters.AddWithValue("@NumberOfButtons", product.NumberOfButtons);
-                        command.Parameters.AddWithValue("@MountType", product.MountType.ToString());
+
+                        // Set NumberOfButtons to DBNull if it's null in the ProductModel
+                        if (product.NumberOfButtons == null)
+                        {
+                            command.Parameters.AddWithValue("@NumberOfButtons", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@NumberOfButtons", product.NumberOfButtons);
+                        }
+
+                        // Set MountType to DBNull if it's null in the ProductModel
+                        if (product.MountType == null)
+                        {
+                            command.Parameters.AddWithValue("@MountType", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@MountType", product.MountType.ToString());
+                        }
+
                         command.Parameters.AddWithValue("@Quantity", product.Quantity);
 
                         connection.Open();
@@ -105,7 +124,7 @@ namespace LutronOrderingSystem.DataAccess
             catch (Exception ex)
             {
                 Console.WriteLine($"Error updating product: {ex.Message}");
-                throw; // Rethrow the exception to propagate it up the call stack
+                throw; 
             }
         }
 
@@ -129,7 +148,7 @@ namespace LutronOrderingSystem.DataAccess
             catch (Exception ex)
             {
                 Console.WriteLine($"Error deleting product: {ex.Message}");
-                throw; // Rethrow the exception to propagate it up the call stack
+                throw; 
             }
         }
 
@@ -155,10 +174,27 @@ namespace LutronOrderingSystem.DataAccess
                                 ModelDisplayString = reader["ModelDisplayString"].ToString(),
                                 Description = reader["Description"].ToString(),
                                 Category = (ProductModel.ProductCategory)Enum.Parse(typeof(ProductModel.ProductCategory), reader["Category"].ToString()),
-                                NumberOfButtons = (int)reader["NumberOfButtons"],
-                                MountType = (ProductModel.MountTypeEnum)Enum.Parse(typeof(ProductModel.MountTypeEnum), reader["MountType"].ToString()),
                                 Quantity = (int)reader["Quantity"]
                             };
+
+                            // Check for null values before parsing
+                            if (reader["NumberOfButtons"] != DBNull.Value && reader["NumberOfButtons"] != null)
+                            {
+                                product.NumberOfButtons = (int)reader["NumberOfButtons"];
+                            }
+                            else
+                            {
+                                product.NumberOfButtons = null;
+                            }
+
+                            if (product.Category != ProductModel.ProductCategory.ControlStation)
+                            {
+                                product.MountType = (ProductModel.MountTypeEnum)Enum.Parse(typeof(ProductModel.MountTypeEnum), reader["MountType"].ToString());
+                            }
+                            else
+                            {
+                                product.MountType = null;
+                            }
                         }
                     }
                 }
@@ -166,11 +202,10 @@ namespace LutronOrderingSystem.DataAccess
             catch (Exception ex)
             {
                 Console.WriteLine($"Error retrieving product: {ex.Message}");
-                throw; // Rethrow the exception to propagate it up the call stack
+                throw; 
             }
             return product;
         }
-
 
     }
 }

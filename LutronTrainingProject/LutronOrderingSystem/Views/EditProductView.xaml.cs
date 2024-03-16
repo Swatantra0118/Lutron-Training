@@ -23,5 +23,6 @@ namespace LutronOrderingSystem.Views
         {
             InitializeComponent();
         }
+
     }
 }

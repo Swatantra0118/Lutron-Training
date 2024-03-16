@@ -4,6 +4,7 @@ using LutronOrderingSystem.Helpers;
 using LutronOrderingSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 
 namespace LutronOrderingSystem.ViewModels
@@ -22,16 +23,29 @@ namespace LutronOrderingSystem.ViewModels
         }
         private readonly DatabaseManager databasemanager;
         public ICommand CheckoutCommand { get; private set; }
+        public ICommand RemoveCommand { get; private set; }
         public CartWindowViewModel(BindableCollection<CartItemViewModel> cartItems)
         {
             CartItems = cartItems;
+            RemoveCommand = new RelayCommand(removeItem);
             CheckoutCommand = new RelayCommand(Checkout);
             databasemanager = new DatabaseManager();
         }
+
+        private void removeItem(object obj)
+        {
+            if(obj is CartItemViewModel c)
+            {
+                CartItems.Remove(c);
+            }
+        }
+
         private void Checkout(object obj)
         {
-            WindowManager _windowManager = new WindowManager();
-            _windowManager.ShowDialogAsync(new CheckoutConfirmationViewModel());
+            //WindowManager _windowManager = new WindowManager();
+            //_windowManager.ShowDialogAsync(new CheckoutConfirmationViewModel());
+            MessageBox.Show("Your order is successfully placed !!","Order Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+            
             foreach (var c in CartItems)
                 {
                     ProductModel p = databasemanager.GetProductById(c.Product.ModelId);
@@ -42,12 +56,6 @@ namespace LutronOrderingSystem.ViewModels
 
             
         }
-        //private void checkout(object obj)
-        //{
-        //    WindowManager windowManager = new WindowManager();
-        //    windowManager.ShowDialogAsync(new CheckoutConfirmationViewModel());
-
-        //}
     }
     public class CheckoutConfirmationViewModel : Screen
     {

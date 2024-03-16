@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using LutronOrderingSystem.DataAccess;
 using LutronOrderingSystem.Models;
 
 namespace LutronOrderingSystem.ViewModels
@@ -16,13 +17,17 @@ namespace LutronOrderingSystem.ViewModels
             }
         }
 
+        private readonly DatabaseManager _databaseManager;
+
         public EditProductViewModel(ProductModel product)
         {
+            _databaseManager = new DatabaseManager();
             Product = product;
         }
 
         public void SaveChanges()
         {
+            _databaseManager.UpdateProduct(Product);
             TryCloseAsync(true); 
         }
 

@@ -23,5 +23,10 @@ namespace LutronOrderingSystem.ViewModels
             }
         }
 
+        public productViewModel(ProductModel product)
+        {
+            Product = product;
+        }
+
     }
 }

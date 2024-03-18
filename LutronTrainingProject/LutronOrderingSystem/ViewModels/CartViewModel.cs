@@ -1,7 +1,9 @@
 ﻿using Caliburn.Micro;
 using LutronOrderingSystem.DataAccess;
 using LutronOrderingSystem.Models;
+using System;
 using System.Linq;
+using System.Windows;
 
 namespace LutronOrderingSystem.ViewModels
 {
@@ -26,21 +28,35 @@ namespace LutronOrderingSystem.ViewModels
         }
         public void AddToCart(ProductModel product)
         {
-            // Check if the product is already in the cart
+            try{   // Check if the product is already in the cart
             var existingItem = CartItems.FirstOrDefault(item => item.Product.ModelId == product.ModelId);
             if (existingItem != null)
-            {
-                existingItem.Quantity++;
-            }
+                {
+                    existingItem.Quantity++;
+                    if (existingItem.Quantity > product.Quantity)
+                {
+                        existingItem.Quantity--;
+                        throw new Exception("You are exceeding available item quantity !!");
+                }
+
+
+                }
             else
             {
                 CartItems.Add(new CartItemViewModel(product, 1));
             }
         }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-        public void RemoveFromCart(CartItemViewModel cartItem)
+        public void RemoveFromCart(ProductModel product)
         {
-            CartItems.Remove(cartItem);
+            var existingItem = CartItems.FirstOrDefault(item => item.Product.ModelId == product.ModelId);
+
+            CartItems.Remove(existingItem);
         }
         
         public void ShowCart()

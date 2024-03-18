@@ -79,15 +79,24 @@ namespace LutronOrderingSystem.ViewModels
 
         private void AddToCart(object obj)
         {
-            if (obj is int modelId)
+            try{   if (obj is int modelId)
             {
 
                 ProductModel productModel = databaseManager.GetProductById(modelId);
-            
+                    if(productModel.Quantity==0)
+                    {
+                        throw new Exception("Quantity is not available for this item anymore !");
+                    }
+
                 CartViewModel.AddToCart(productModel); // Call AddToCart method of CartViewModel
                 LoadControlStations();
                 LoadEnclosures();
 
+            }
+        }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

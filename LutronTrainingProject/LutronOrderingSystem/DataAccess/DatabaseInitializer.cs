@@ -9,7 +9,7 @@ namespace LutronOrderingSystem.DataAccess
 {
     public class DatabaseInitializer
     {
-        private string connectionString = "Server=IN-PG0351QK;Trusted_Connection=True;TrustServerCertificate=True";
+        private string connectionString = "Server=(localdb)\\mssqllocaldb;Trusted_Connection=True;TrustServerCertificate=True";
 
         private bool DatabaseExists()
         {

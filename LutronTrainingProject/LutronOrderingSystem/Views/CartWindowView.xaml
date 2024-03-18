@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LutronOrderingSystem.Views"
         xmlns:viewmodels="clr-namespace:LutronOrderingSystem.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:CartWindowViewModel}"
         mc:Ignorable="d"
         Title="My Cart" Height="450" Width="800">
     <Grid>
@@ -18,27 +19,30 @@
         <TextBlock Text="My Cart" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10"/>
 
         <!-- Cart Items -->
-        <ListBox Grid.Row="1" ItemsSource="{Binding CartItems}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Model ID: " Margin="5"/>
-                        <TextBlock Text="{Binding Product.ModelId}" Margin="5"/>
-                        <TextBlock Text="Model Display String: " Margin="5"/>
-                        <TextBlock Text="{Binding Product.ModelDisplayString}" Margin="5"/>
-                        <TextBlock Text="Description: " Margin="5"/>
-                        <TextBlock Text="{Binding Product.Description}" Margin="5"/>
-                        <TextBlock Text="Quantity: " Margin="5"/>
-                        <TextBlock Text="{Binding Product.Quantity}" Margin="5"/>
-                        <TextBlock Text="Cart Quantity: " Margin="5"/>
-                        <TextBlock Text="{Binding Quantity}" Margin="5"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+       
+        <DataGrid Grid.Row="1" IsReadOnly="True" Margin="0,0.333,-0.667,100.667" ItemsSource="{Binding CartItems}" AutoGenerateColumns="False">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Model ID" Binding="{Binding Product.ModelId}" />
+                <DataGridTextColumn Header="Model Display String" Binding="{Binding Product.ModelDisplayString}" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Product.Description}" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+
+                <DataGridTemplateColumn Header=" Remove Item ">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Remove" Margin="5" Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
 
         <!-- Checkout Button -->
-        <Button Content="Checkout" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0"
-                Command="{Binding CheckoutCommand}" />
+        <Button Content="Checkout" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="359,0,359.333,33.667"
+                Command="{Binding CheckoutCommand}" Height="29" Width="75" />
     </Grid>
 </Window>

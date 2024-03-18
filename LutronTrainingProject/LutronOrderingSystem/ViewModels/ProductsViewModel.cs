@@ -197,6 +197,7 @@ namespace LutronOrderingSystem.ViewModels
                 
                 LoadControlStations();
                 LoadEnclosures();
+                MessageBox.Show("Your product is successfully deleted !!", "Deleted Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
 
@@ -244,6 +245,7 @@ namespace LutronOrderingSystem.ViewModels
                     if (result.HasValue && result.Value)
                     {
                         databaseManager.UpdateProduct(editProductViewModel.Product);
+                        MessageBox.Show("Product is updated successfully !!", "Updated Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         LoadControlStations();
                         LoadEnclosures();
@@ -295,11 +297,15 @@ namespace LutronOrderingSystem.ViewModels
 
                     databaseManager.AddProduct(newProduct);
 
+                    
+
                     LoadControlStations();
                     LoadEnclosures();
 
                     NotifyOfPropertyChange(nameof(ControlStations));
                     NotifyOfPropertyChange(nameof(Enclosures));
+                    MessageBox.Show("Your product is successfully added !!", "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
                 catch (Exception ex)
                 {

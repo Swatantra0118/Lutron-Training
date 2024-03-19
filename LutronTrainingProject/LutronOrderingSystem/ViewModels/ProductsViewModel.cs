@@ -43,7 +43,17 @@ namespace LutronOrderingSystem.ViewModels
         public ObservableCollection<EnclosureModel> Enclosures { get; set; }
         public ObservableCollection<ControlStationModel> ControlStations { get; set; }
 
-
+        private int _selectedTabIndex;
+        public int SelectedTabIndex
+        {
+            get { return _selectedTabIndex; }
+            set
+            {
+                _selectedTabIndex = value;
+                NotifyOfPropertyChange(nameof(SelectedTabIndex));
+                UpdateVisibility();
+            }
+        }
         public ICommand AddCommand { get;  set; }
         public ICommand EditCommand { get;  set; }
         public ICommand DeleteCommand { get;  set; }
@@ -186,6 +196,11 @@ namespace LutronOrderingSystem.ViewModels
             }
         }
 
+        private void UpdateVisibility()
+        {
+            IsControlStationsVisible = SelectedTabIndex == 0;
+            IsEnclosuresVisible = SelectedTabIndex == 1;
+        }
 
         private void DeleteProduct(object obj)
         {

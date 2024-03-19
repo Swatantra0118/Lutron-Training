@@ -12,8 +12,47 @@
         <viewmodels:ProductsViewModel x:Key="productsViewModel"/>
         <helper:CategoryToVisibilityConverter x:Key="CategoryToVisibilityConverter"/>
         <helper:CategoryConverter x:Key="CategoryConverter"/>
+   
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <helper:Int32ToBooleanConverter x:Key="Int32ToBooleanConverter"/>
+
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                        BorderBrush="Black" 
+                        BorderThickness="0.5"
+                        CornerRadius="5">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#b6ccb4" />
+                                    <GradientStop Offset="0.5" Color="#FFFFFF" />
+                                    <GradientStop Offset="1" Color="#abf2a5" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#e4ede4" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
+
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="#abf2a5" />
+                <GradientStop Offset="0.5" Color="#FFFFFF" />
+                <GradientStop Offset="1" Color="#DFF0D8" />
+            </LinearGradientBrush>
+        </Grid.Background>
         <StackPanel Margin="10">
             <TextBlock Text="Model Display String:" Margin="0,0,0,5" />
             <TextBox Text="{Binding Product.ModelDisplayString, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,15" />
@@ -52,7 +91,7 @@
             <TextBox Text="{Binding Product.Quantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, TargetNullValue=''}" Margin="0,0,0,15"/>
 
             <StackPanel>
-                <Button Content="Add" x:Name="AddProductAsync" HorizontalAlignment="Center" Margin="0,10,0,0" />
+                <Button Height="23" Width="80" Content="Add" x:Name="AddProductAsync" HorizontalAlignment="Center" Margin="0,10,0,0" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

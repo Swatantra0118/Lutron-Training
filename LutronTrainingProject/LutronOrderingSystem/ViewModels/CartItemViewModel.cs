@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using LutronOrderingSystem.Helpers;
 using LutronOrderingSystem.Models;
 
 namespace LutronOrderingSystem.ViewModels
@@ -26,11 +27,22 @@ namespace LutronOrderingSystem.ViewModels
                 NotifyOfPropertyChange(() => Quantity);
             }
         }
+        public ICommand RemoveCommand { get; private set; }
 
         public CartItemViewModel(ProductModel product, int quantity)
         {
             Product = product;
             Quantity = quantity;
+
+            RemoveCommand = new RelayCommand(removeItem);
+        }
+
+        private void removeItem(object obj)
+        {
+            if (obj is CartItemViewModel c)
+            {
+                CartItems.Remove(c);
+            }
         }
     }
 

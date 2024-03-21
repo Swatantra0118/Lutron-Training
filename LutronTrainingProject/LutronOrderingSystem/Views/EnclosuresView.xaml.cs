@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LutronOrderingSystem.Views
 {
     /// <summary>
-    /// Interaction logic for EnclosuresView.xaml
+    /// Interaction logic for Enclosures.xaml
     /// </summary>
-    public partial class EnclosuresView : UserControl
+    public partial class Enclosures : Window
     {
-        public EnclosuresView()
+        public Enclosures()
         {
             InitializeComponent();
         }

@@ -86,7 +86,7 @@ namespace LutronOrderingSystem.ViewModels
         }
 
 
-        private void AddToCart(object obj)
+        public void AddToCart(object obj)
         {
             try
             {  
@@ -329,7 +329,6 @@ namespace LutronOrderingSystem.ViewModels
 
                     NotifyOfPropertyChange(nameof(ControlStations));
                     NotifyOfPropertyChange(nameof(Enclosures));
-                    MessageBox.Show("Your product is successfully added !!", "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 }
                 catch (Exception ex)

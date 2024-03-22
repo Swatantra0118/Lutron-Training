@@ -29,7 +29,7 @@ namespace LutronOrderingSystem.ViewModels
         public ICommand CheckoutCommand { get; private set; }
         public ICommand RemoveCommand { get; private set; }
         private readonly HttpClient _httpClient;
-        private readonly string _apiBaseUrl = "https://localhost:7124/api/Order";
+        private readonly string _apiBaseUrl = "http://localhost:5018/api/Order";
 
 
         public CartWindowViewModel(BindableCollection<CartItemViewModel> cartItems)
@@ -43,7 +43,7 @@ namespace LutronOrderingSystem.ViewModels
         }
         
 
-        public async void PlaceOrderAsync(List<CartItemDTO> cartItems)
+        public async Task PlaceOrderAsync(List<CartItemDTO> cartItems)
         {
             try
             {
@@ -57,15 +57,16 @@ namespace LutronOrderingSystem.ViewModels
                 Console.WriteLine($"Error placing order: {ex.Message}");
             }
         }
-        private void removeItem(object obj)
+        public void removeItem(object obj)
         {
             if(obj is CartItemViewModel c)
             {
                 CartItems.Remove(c);
+                MessageBox.Show("Your item is removed successfully from the cart !!" , "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        private void Checkout(object obj)
+        public void Checkout(object obj)
         {
             if (CartItems.Count != 0)
             {

@@ -28,22 +28,26 @@ namespace LutronOrderingSystem.ViewModels
         }
         public void AddToCart(ProductModel product)
         {
-            try{ 
-            var existingItem = CartItems.FirstOrDefault(item => item.Product.ModelId == product.ModelId);
-            if (existingItem != null)
-                {
-                    existingItem.Quantity++;
-                    if (existingItem.Quantity > product.Quantity)
+            try
+            { 
+                var existingItem = CartItems.FirstOrDefault(item => item.Product.ModelId == product.ModelId);
+                if (existingItem != null)
                     {
-                        existingItem.Quantity--;
-                        throw new Exception("You are exceeding available item quantity !!");
+                        existingItem.Quantity++;
+
+                        if (existingItem.Quantity > product.Quantity)
+                        {
+                            existingItem.Quantity--;
+                            throw new Exception("You are exceeding available item quantity !!");
+                        }
+                        MessageBox.Show("Already in the cart, increasing the quantity by one !!", "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
+                else
+                {
+                    CartItems.Add(new CartItemViewModel(product, 1));
+                    MessageBox.Show("Your product is successfully added to the cart !!", "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-            else
-            {
-                CartItems.Add(new CartItemViewModel(product, 1));
             }
-        }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);

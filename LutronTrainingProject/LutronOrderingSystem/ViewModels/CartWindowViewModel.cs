@@ -28,8 +28,10 @@ namespace LutronOrderingSystem.ViewModels
         private readonly DatabaseManager databasemanager;
         public ICommand CheckoutCommand { get; private set; }
         public ICommand RemoveCommand { get; private set; }
+        public ICommand AddCommand { get; private set; }
+        public ICommand MinusCommand { get; private set; }
         private readonly HttpClient _httpClient;
-        private readonly string _apiBaseUrl = "http://localhost:5018/api/Order";
+        private readonly string _apiBaseUrl = "https://localhost:5018/api/Order";
 
 
         public CartWindowViewModel(BindableCollection<CartItemViewModel> cartItems)
@@ -37,36 +39,69 @@ namespace LutronOrderingSystem.ViewModels
             CartItems = cartItems;
             RemoveCommand = new RelayCommand(removeItem);
             CheckoutCommand = new RelayCommand(Checkout);
+            AddCommand = new RelayCommand(add);
+            MinusCommand = new RelayCommand(minus);
             databasemanager = new DatabaseManager();
             _httpClient = new HttpClient();
 
         }
-        
 
-        public async Task PlaceOrderAsync(List<CartItemDTO> cartItems)
+        private void add(object obj)
+        {
+            if (obj is CartItemViewModel c)
+            {
+                c.Quantity++;
+                if (c.Quantity > c.Product.Quantity)
+                {
+                    MessageBox.Show("Desired Quantity unavailable !!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    c.Quantity--;
+                }
+            }
+        }
+
+        private void minus(object obj)
+        {
+            if (obj is CartItemViewModel c)
+            {
+                c.Quantity--;
+                if (c.Quantity < 1)
+                {
+                    MessageBox.Show("Cannot further reduce the Quantity !!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    c.Quantity++;
+                }
+            }
+        }
+
+        public async void PlaceOrderAsync(List<CartItemDTO> cartItems)
         {
             try
             {
-                //Serialize list to JSON
+                // Serialize list to JSON
                 string cartItemsJson = JsonConvert.SerializeObject(cartItems);
+
                 var content = new StringContent(cartItemsJson, Encoding.UTF8, "application/json");
+
                 var response = await _httpClient.PostAsync(_apiBaseUrl, content);
+
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error placing order: {ex.Message}");
+
             }
         }
-        public void removeItem(object obj)
+        private void removeItem(object obj)
         {
-            if(obj is CartItemViewModel c)
+            if (obj is CartItemViewModel c)
             {
                 CartItems.Remove(c);
-                MessageBox.Show("Your item is removed successfully from the cart !!" , "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        public void Checkout(object obj)
+
+
+        private void Checkout(object obj)
         {
             if (CartItems.Count != 0)
             {
@@ -76,20 +111,22 @@ namespace LutronOrderingSystem.ViewModels
             {
                 MessageBox.Show("Your cart is empty !!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            var Itemz= new List<CartItemDTO>();
+            var Itemz = new List<CartItemDTO>();
             foreach (var c in CartItems)
             {
                 var newItem = new CartItemDTO();
                 newItem.Product = c.Product;
                 newItem.Quantity = c.Quantity;
                 Itemz.Add(newItem);
-                    ProductModel p = databasemanager.GetProductById(c.Product.ModelId);
-                    p.Quantity -= c.Quantity;
-                    databasemanager.UpdateProduct(p);
+                ProductModel p = databasemanager.GetProductById(c.Product.ModelId);
+                p.Quantity -= c.Quantity;
+                databasemanager.UpdateProduct(p);
             }
             PlaceOrderAsync(Itemz);
-            CartItems.Clear();           
+            CartItems.Clear();
+
+
         }
     }
-    
+
 }

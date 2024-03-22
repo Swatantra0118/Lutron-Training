@@ -27,7 +27,7 @@ namespace LutronOrderingSystem.Tests
             // Arrange
             ProductModel product = new ProductModel
             {
-                ModelId = 7,
+                ModelId = 1007,
                 ModelDisplayString = "TestProduct",
                 Description = "TestDescription",
                 Category = ProductModel.ProductCategory.ControlStation,

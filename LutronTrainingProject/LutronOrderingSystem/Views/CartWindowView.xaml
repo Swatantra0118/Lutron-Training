@@ -63,8 +63,22 @@
                 <DataGridTextColumn Header="Model ID" Binding="{Binding Product.ModelId}" />
                 <DataGridTextColumn Header="Model Display String" Binding="{Binding Product.ModelDisplayString}" />
                 <DataGridTextColumn Header="Description" Binding="{Binding Product.Description}" />
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
-
+                <DataGridTemplateColumn Header="Quantity">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Width="25" Content="-" Command="{Binding DataContext.MinusCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Style="{StaticResource CustomButtonStyle}" Margin="5"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Quantity}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Button Grid.Column="2" Width="25" Content="+" Command="{Binding DataContext.AddCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Style="{StaticResource CustomButtonStyle}" Margin="5"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header=" Remove Item ">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
